@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luz Viva Church</title>
+  <meta name="description" content="Luz Viva Church — Descubra vida, família e propósito em Deus." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #080808;
+      --dark:    #111111;
+      --card:    #161616;
+      --card2:   #1a1a1a;
+      --white:   #ffffff;
+      --muted:   rgba(255,255,255,0.55);
+      --border:  rgba(255,255,255,0.08);
+      --blue:    #4fc3f7;
+      --gold:    #f5a623;
+      --radius:  14px;
+      --ease:    cubic-bezier(0.22,1,0.36,1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 56px;
+      display: flex; align-items: center;
+      padding: 0 20px;
+      transition: background 0.4s var(--ease);
+    }
+    #nav.bg { background: rgba(8,8,8,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+
+    .nav-logo {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-right: 20px;
+    }
+    .nav-logo svg { width: 18px; height: 18px; }
+
+    .nav-pills {
+      display: flex; align-items: center; gap: 6px;
+      list-style: none; flex: 1;
+    }
+    .nav-pills a {
+      display: inline-block;
+      padding: 6px 15px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      font-size: 12.5px; font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      transition: all 0.2s var(--ease);
+      white-space: nowrap;
+    }
+    .nav-pills a:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 12px; margin-left: auto;
+    }
+    .nav-give {
+      padding: 7px 18px; border-radius: 50px;
+      background: var(--white); color: var(--black);
+      font-size: 12.5px; font-weight: 700;
+      transition: all 0.2s var(--ease);
+    }
+    .nav-give:hover { background: #e0e0e0; }
+    .nav-location {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .nav-location svg { width: 15px; height: 15px; color: rgba(255,255,255,0.7); }
+    .nav-location:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 4px;
+      padding: 6px; margin-left: 8px;
+    }
+    .nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--white); border-radius: 2px; }
+
+    .mobile-drawer {
+      display: none; position: fixed; inset: 56px 0 0;
+      background: rgba(8,8,8,0.97); backdrop-filter: blur(20px);
+      z-index: 99; flex-direction: column;
+      align-items: flex-start; padding: 32px 24px; gap: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-drawer.open { display: flex; }
+    .mobile-drawer a { font-size: 1.4rem; font-weight: 600; color: rgba(255,255,255,0.8); transition: color 0.2s; }
+    .mobile-drawer a:hover { color: var(--white); }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100dvh; min-height: 580px;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      background: url('5.webp') center 30%/cover no-repeat;
+      transform: scale(1.04);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8,8,8,0.75) 0%, rgba(8,8,8,0.1) 55%, transparent 100%),
+        linear-gradient(0deg, rgba(8,8,8,1) 0%, rgba(8,8,8,0.0) 45%);
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 72px; left: 0;
+      padding: 0 40px;
+      max-width: 640px;
+      animation: heroFade 0.9s var(--ease) 0.3s both;
+    }
+    @keyframes heroFade {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .hero-label::before {
+      content: ''; display: block; width: 20px; height: 1.5px;
+      background: var(--gold);
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .hero-sub {
+      font-size: 15px; font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 28px; line-height: 1.6;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-pill-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px; border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.55);
+      color: var(--white); font-size: 13px; font-weight: 600;
+      transition: all 0.25s var(--ease);
+    }
+    .btn-pill-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.8); }
+    .btn-pill-solid {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px; border-radius: 50px;
+      background: var(--white); color: var(--black);
+      font-size: 13px; font-weight: 700;
+      transition: all 0.25s var(--ease);
+    }
+    .btn-pill-solid:hover { background: #ddd; }
+
+    /* scroll indicator */
+    .hero-scroll-hint {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0.4; animation: heroFade 0.9s var(--ease) 1.2s both;
+    }
+    .hero-scroll-hint span { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; }
+    .hero-scroll-hint svg { width: 16px; height: 16px; animation: scrollBounce 2s ease-in-out infinite; }
+    @keyframes scrollBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+    /* ── MAIN WRAP ────────────────────────────────────── */
+    main { padding: 0 16px; max-width: 1160px; margin: 0 auto; }
+
+    /* ── BANNER CARDS ─────────────────────────────────── */
+    .banners {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 24px 0 0;
+    }
+    .banner-card {
+      position: relative;
+      border-radius: var(--radius); overflow: hidden;
+      height: 130px;
+      display: flex; align-items: flex-end;
+      padding: 22px 24px;
+      cursor: pointer;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    .banner-card:hover { transform: scale(1.012); box-shadow: 0 8px 32px rgba(0,0,0,0.6); }
+    .banner-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+    }
+    .banner-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+    }
+    .banner-content { position: relative; z-index: 1; }
+    .banner-content h2 { font-size: 1.25rem; font-weight: 800; line-height: 1.15; }
+    .banner-content p { font-size: 12.5px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+    .banner-arrow {
+      position: absolute; top: 18px; right: 18px; z-index: 1;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s var(--ease);
+    }
+    .banner-card:hover .banner-arrow { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
+    .banner-arrow svg { width: 14px; height: 14px; }
+
+    /* banner 2 — série especial */
+    .banner-series {
+      background: #0e0e16;
+      height: 120px;
+      padding: 0;
+      align-items: center; justify-content: center;
+    }
+    .banner-series-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      gap: 4px; text-align: center;
+    }
+    .series-star { color: var(--gold); font-size: 14px; line-height: 1; }
+    .series-title {
+      font-size: 2rem; font-weight: 900; line-height: 1;
+      letter-spacing: -0.03em; text-transform: uppercase;
+    }
+    .series-title em { font-style: italic; font-family: Georgia, serif; color: var(--gold); }
+    .series-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.12em; }
+
+    /* section divider label */
+    .section-divider {
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 0 28px; gap: 12px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .section-divider span {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── 3-COL GRID ───────────────────────────────────── */
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 10px;
+      padding-bottom: 10px;
+    }
+
+    /* Card: New to church */
+    .card-img {
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; min-height: 320px;
+      display: flex; align-items: flex-end;
+      cursor: pointer; transition: transform 0.35s var(--ease);
+    }
+    .card-img:hover { transform: scale(1.02); }
+    .card-img-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+    }
+    .card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+    }
+    .card-img-content {
+      position: relative; z-index: 1;
+      padding: 24px 22px;
+    }
+    .card-img-content h3 { font-size: 1.25rem; font-weight: 800; line-height: 1.2; margin-bottom: 6px; }
+    .card-img-content p { font-size: 12.5px; color: rgba(255,255,255,0.6); }
+    .card-img-arrow {
+      position: absolute; top: 16px; right: 16px; z-index: 1;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-img-arrow svg { width: 13px; height: 13px; }
+
+    /* Card: Locations */
+    .card-locations {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      border: 1px solid var(--border);
+    }
+    .card-locations h3 {
+      font-size: 1.3rem; font-weight: 800; line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .card-locations > p {
+      font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.6;
+    }
+    .location-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip {
+      padding: 6px 14px; border-radius: 50px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.8);
+      cursor: pointer; transition: all 0.2s var(--ease);
+    }
+    .chip:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.22); color: var(--white); }
+    .chip.active { background: var(--white); color: var(--black); border-color: var(--white); }
+    .location-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .horarios-list { display: flex; flex-direction: column; gap: 0; }
+    .horario-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .horario-row:last-child { border-bottom: none; }
+    .horario-row span:first-child { color: var(--muted); }
+    .horario-row span:last-child { color: var(--white); font-weight: 600; }
+
+    /* Card: Ministérios */
+    .card-ministerios {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      color: var(--black);
+    }
+    .card-ministerios h3 {
+      font-size: 1.3rem; font-weight: 800; color: var(--black);
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .card-ministerios > p {
+      font-size: 13px; color: rgba(0,0,0,0.55); margin-bottom: 20px; line-height: 1.6;
+    }
+    .ministerio-list { display: flex; flex-direction: column; gap: 0; }
+    .ministerio-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+      cursor: pointer; transition: background 0.2s;
+    }
+    .ministerio-row:last-child { border-bottom: none; }
+    .ministerio-row:hover .ministerio-row-name { color: #333; }
+    .ministerio-row-info {}
+    .ministerio-row-name { font-size: 13.5px; font-weight: 700; color: var(--black); }
+    .ministerio-row-sub { font-size: 11.5px; color: rgba(0,0,0,0.45); margin-top: 2px; }
+    .ministerio-row-arrow { width: 26px; height: 26px; border-radius: 50%; background: rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ministerio-row-arrow svg { width: 11px; height: 11px; color: rgba(0,0,0,0.5); }
+
+    /* ── NEXT STEP BANNER ─────────────────────────────── */
+    .nextstep-banner {
+      margin-top: 10px;
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; height: 130px;
+      display: flex; align-items: flex-end;
+      padding: 22px 24px;
+      background: linear-gradient(135deg, #0d1a2a, #0a1520, #111820);
+      cursor: pointer;
+      transition: transform 0.3s var(--ease);
+    }
+    .nextstep-banner:hover { transform: scale(1.01); }
+    .nextstep-glow {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 50%, rgba(79,195,247,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(245,166,35,0.12) 0%, transparent 50%);
+    }
+    .nextstep-content { position: relative; z-index: 1; }
+    .nextstep-content h2 { font-size: 1.25rem; font-weight: 800; }
+    .nextstep-content p { font-size: 12.5px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+    .nextstep-arrow {
+      position: absolute; top: 18px; right: 18px; z-index: 1;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(79,195,247,0.15); border: 1px solid rgba(79,195,247,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s;
+    }
+    .nextstep-banner:hover .nextstep-arrow { background: rgba(79,195,247,0.25); }
+    .nextstep-arrow svg { width: 14px; height: 14px; color: var(--blue); }
+
+    /* ── COMING UP ────────────────────────────────────── */
+    .section-divider2 {
+      display: flex; align-items: center; justify-content: center;
+      padding: 36px 0 24px; gap: 12px;
+    }
+    .section-divider2::before, .section-divider2::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .section-divider2 span {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .eventos-scroll {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding-bottom: 32px;
+    }
+    .evento-card {
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; aspect-ratio: 3/4;
+      cursor: pointer; transition: transform 0.35s var(--ease);
+    }
+    .evento-card:hover { transform: scale(1.03); }
+    .evento-card-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 0.5s var(--ease);
+    }
+    .evento-card:hover .evento-card-img { transform: scale(1.06); }
+    .evento-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.0) 55%);
+    }
+    .evento-card-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px 18px;
+    }
+    .evento-tag {
+      display: inline-block; margin-bottom: 8px;
+      padding: 3px 10px; border-radius: 50px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
+    }
+    .evento-card-content h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.2; margin-bottom: 4px; }
+    .evento-card-content p { font-size: 11.5px; color: rgba(255,255,255,0.55); }
+    .evento-arrow {
+      position: absolute; top: 14px; right: 14px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .evento-arrow svg { width: 11px; height: 11px; }
+
+    /* ── YOUTUBE ──────────────────────────────────────── */
+    .yt-section { padding-bottom: 10px; }
+
+    .yt-main {
+      display: block; /* obrigatório para <a> conter position:absolute */
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      background: #0a0a0a; cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .yt-thumb-wrap {
+      position: relative; width: 100%;
+      padding-bottom: 56.25%; /* 16:9 — funciona em todos os browsers */
+      overflow: hidden;
+    }
+    .yt-thumb {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s var(--ease), filter 0.3s;
+      filter: brightness(0.75);
+    }
+    .yt-main:hover .yt-thumb { transform: scale(1.03); filter: brightness(0.65); }
+    .yt-main-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.1) 55%);
+    }
+    .yt-play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.35);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s var(--ease);
+      backdrop-filter: blur(6px);
+    }
+    .yt-main:hover .yt-play-btn { background: rgba(255,0,0,0.8); border-color: #ff0000; transform: translate(-50%, -50%) scale(1.1); }
+    .yt-play-btn svg { width: 28px; height: 28px; margin-left: 4px; }
+    .yt-live-badge {
+      position: absolute; top: 18px; left: 18px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 50px;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em;
+    }
+    .yt-live-dot { width: 7px; height: 7px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.8); animation: liveBlip 1.5s ease-in-out infinite; }
+    @keyframes liveBlip { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+    .yt-main-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px 18px;
+    }
+    .yt-main-info h3 {
+      font-size: clamp(0.95rem, 3vw, 1.2rem); font-weight: 800;
+      line-height: 1.25; margin-bottom: 5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .yt-main-info p { font-size: 12px; color: rgba(255,255,255,0.55); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .yt-main-arrow {
+      position: absolute; top: 18px; right: 18px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .yt-main-arrow svg { width: 14px; height: 14px; }
+
+    .yt-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 16px;
+    }
+    .yt-card {
+      display: flex; flex-direction: column; /* <a> precisa de display explícito */
+      border-radius: var(--radius); overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+      cursor: pointer; transition: all 0.3s var(--ease);
+    }
+    .yt-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
+    .yt-card-thumb {
+      position: relative; padding-bottom: 56.25%; overflow: hidden;
+    }
+    .yt-card-thumb img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s var(--ease);
+    }
+    .yt-card:hover .yt-card-thumb img { transform: scale(1.06); }
+    .yt-card-play {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.25);
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .yt-card:hover .yt-card-play { opacity: 1; }
+    .yt-card-play-inner {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,0,0,0.85);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .yt-card-play-inner svg { width: 18px; height: 18px; margin-left: 3px; }
+    .yt-card-duration {
+      position: absolute; bottom: 8px; right: 8px;
+      padding: 2px 7px; border-radius: 4px;
+      background: rgba(0,0,0,0.82);
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .yt-card-body { padding: 14px 14px 16px; flex: 1; }
+    .yt-card-body h4 { font-size: 13px; font-weight: 700; line-height: 1.35; margin-bottom: 6px; }
+    .yt-card-meta { font-size: 11.5px; color: var(--muted); }
+
+    .yt-cta-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 4px 0 0;
+    }
+    .yt-cta-row p { font-size: 13px; color: var(--muted); }
+    .btn-yt {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 50px;
+      background: #ff0000; color: #fff;
+      font-size: 12.5px; font-weight: 700;
+      transition: all 0.25s var(--ease);
+    }
+    .btn-yt:hover { background: #cc0000; transform: translateY(-1px); }
+    .btn-yt svg { width: 15px; height: 15px; }
+
+    /* ── FLICKR PHOTOS ────────────────────────────────── */
+    .flickr-section { padding: 0 0 10px; }
+
+    .flickr-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 14px; gap: 16px;
+    }
+    .flickr-header-left h2 { font-size: 1.1rem; font-weight: 800; }
+    .flickr-header-left p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+    .btn-flickr {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 50px;
+      border: 1px solid var(--border);
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+      transition: all 0.2s var(--ease); white-space: nowrap;
+    }
+    .btn-flickr:hover { border-color: rgba(255,255,255,0.3); color: var(--white); background: rgba(255,255,255,0.05); }
+    .btn-flickr svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .flickr-track-wrap {
+      overflow: hidden;
+      border-radius: var(--radius);
+      position: relative;
+    }
+    .flickr-track-wrap::before,
+    .flickr-track-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+    }
+    .flickr-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--black), transparent); }
+    .flickr-track-wrap::after  { right: 0; background: linear-gradient(270deg, var(--black), transparent); }
+
+    .flickr-track {
+      display: flex; gap: 10px;
+      animation: flickrScroll 28s linear infinite;
+      width: max-content;
+    }
+    .flickr-track:hover { animation-play-state: paused; }
+    @keyframes flickrScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .flickr-photo {
+      flex-shrink: 0; border-radius: 10px; overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    .flickr-photo img {
+      width: 220px; height: 160px; object-fit: cover;
+      display: block;
+      transition: transform 0.4s var(--ease);
+    }
+    .flickr-photo:hover img { transform: scale(1.07); }
+    .flickr-photo-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .flickr-photo:hover .flickr-photo-overlay { background: rgba(0,0,0,0.35); }
+    .flickr-photo-zoom {
+      opacity: 0; transform: scale(0.8);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s var(--ease);
+    }
+    .flickr-photo:hover .flickr-photo-zoom { opacity: 1; transform: scale(1); }
+    .flickr-photo-zoom svg { width: 15px; height: 15px; }
+
+    /* lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.94); backdrop-filter: blur(16px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%; max-height: 90vh;
+      border-radius: 10px; object-fit: contain;
+      box-shadow: 0 0 80px rgba(0,0,0,0.8);
+    }
+    .lightbox-close {
+      position: fixed; top: 20px; right: 20px;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
+      color: white;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+    .lightbox-close svg { width: 18px; height: 18px; }
+    .lightbox-prev, .lightbox-next {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; color: white;
+    }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+    .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.18); }
+    .lightbox-prev svg, .lightbox-next svg { width: 20px; height: 20px; }
+    .lightbox-counter { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; }
+
+    /* ── GIVING STRIP ─────────────────────────────────── */
+    .giving-strip {
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 28px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; margin-bottom: 10px;
+    }
+    .giving-strip-text h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+    .giving-strip-text p { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 480px; }
+    .giving-strip-action { flex-shrink: 0; }
+    .btn-give {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 50px;
+      background: var(--white); color: var(--black);
+      font-size: 13px; font-weight: 700;
+      transition: all 0.25s var(--ease);
+    }
+    .btn-give:hover { background: #ddd; }
+    .btn-give svg { width: 14px; height: 14px; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 0 32px;
+      max-width: 1160px; margin: 0 auto;
+    }
+    .footer-top {
+      padding: 0 16px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1.2fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-col-logo .nav-logo { margin-bottom: 14px; }
+    .footer-col-logo p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+    .fsocial {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .fsocial svg { width: 14px; height: 14px; color: var(--muted); }
+    .fsocial:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); }
+    .fsocial:hover svg { color: var(--white); }
+    .footer-col h4 {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col ul a { font-size: 13.5px; color: rgba(255,255,255,0.7); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-newsletter h4 {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+    }
+    .footer-newsletter p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+    .footer-form { display: flex; flex-direction: column; gap: 8px; }
+    .footer-input {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--white); font-size: 13px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .footer-input::placeholder { color: rgba(255,255,255,0.3); }
+    .footer-input:focus { border-color: rgba(255,255,255,0.25); }
+    .footer-submit {
+      padding: 10px 18px; border-radius: 8px;
+      background: var(--white); color: var(--black);
+      font-size: 13px; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .footer-submit:hover { background: #ddd; }
+    .footer-bottom {
+      padding: 20px 16px 0;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer-bottom nav { display: flex; gap: 20px; }
+    .footer-bottom nav a { font-size: 12px; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .footer-bottom nav a:hover { color: rgba(255,255,255,0.65); }
+
+    /* ── REVEAL ───────────────────────────────────────── */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .fade-up.in { opacity: 1; transform: none; }
+    .fade-up.d1 { transition-delay: 0.08s; }
+    .fade-up.d2 { transition-delay: 0.16s; }
+    .fade-up.d3 { transition-delay: 0.24s; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .grid3 { grid-template-columns: 1fr 1fr; }
+      .card-ministerios { grid-column: 1 / -1; }
+      .yt-grid { grid-template-columns: 1fr 1fr; }
+      .yt-grid .yt-card:last-child { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-newsletter { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+      .nav-pills, .nav-give, .nav-location { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-content { padding: 0 20px; bottom: 64px; }
+      .hero-title { font-size: 2.8rem; }
+      main { padding: 0 12px; }
+      .grid3 { grid-template-columns: 1fr; }
+      .card-img { min-height: 260px; }
+      .eventos-scroll { grid-template-columns: 1fr 1fr; }
+      .eventos-scroll .evento-card:last-child { display: none; }
+      .yt-grid { grid-template-columns: 1fr; }
+      .yt-grid .yt-card:last-child { display: flex; }
+      .yt-cta-row { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .flickr-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .giving-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+    }
+    @media (max-width: 480px) {
+      .eventos-scroll { grid-template-columns: 1fr; }
+      .eventos-scroll .evento-card:last-child { display: block; }
+      .yt-play-btn { width: 56px; height: 56px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ───────────────────────────────────────────────── -->
+  <nav id="nav" aria-label="Navegação principal">
+    <a href="#" class="nav-logo" aria-label="Luz Viva Church — Início">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="11" y="1" width="6" height="26" rx="1.5" fill="#111"/>
+        <rect x="1" y="9" width="26" height="6" rx="1.5" fill="#111"/>
+      </svg>
+    </a>
+
+    <ul class="nav-pills" role="list">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#grid3">Envolver-se</a></li>
+      <li><a href="#grid3">Locais</a></li>
+      <li><a href="#eventos">Eventos</a></li>
+      <li><a href="#midia">Mídia</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="#giving" class="nav-give">Contribuir</a>
+      <a href="#grid3" class="nav-location" aria-label="Encontrar local">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </a>
+    </div>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="mobile-drawer" id="drawer" aria-label="Menu mobile">
+    <a href="#sobre">Sobre</a>
+    <a href="#grid3">Envolver-se</a>
+    <a href="#grid3">Locais</a>
+    <a href="#eventos">Eventos</a>
+    <a href="#midia">Mídia</a>
+    <a href="#giving" style="color:#f5a623;font-weight:700;">Contribuir</a>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <section id="hero" aria-label="Bem-vindo à Luz Viva Church">
+    <div class="hero-img" role="img" aria-label="Cruz iluminada com congregação em adoração"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-label">Luz Viva Church</p>
+      <h1 class="hero-title">Junte-se<br>a Nós<br>Domingo</h1>
+      <p class="hero-sub">Descubra vida, família e propósito em Deus.</p>
+      <div class="hero-actions">
+        <a href="#grid3" class="btn-pill-white">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Encontrar Um Local
+        </a>
+        <a href="#aovivo" class="btn-pill-solid">
+          Assistir Online
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ── MAIN CONTENT ───────────────────────────────────────── -->
+  <main>
+
+    <!-- Banner cards -->
+    <div class="banners" id="aovivo">
+      <!-- Ao Vivo -->
+      <a href="#" class="banner-card fade-up" aria-label="Assistir ao vivo — Junte-se online">
+        <div class="banner-bg" style="background-image:url('3.webp');" aria-hidden="true"></div>
+        <div class="banner-overlay" aria-hidden="true"></div>
+        <div class="banner-content">
+          <h2>Junte-se Online</h2>
+          <p>Streaming ao vivo todo domingo às 9h e 18h.</p>
+        </div>
+        <div class="banner-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Série especial -->
+      <div class="banner-card banner-series fade-up d1" role="region" aria-label="Série especial">
+        <div class="banner-series-inner">
+          <div class="series-star" aria-hidden="true">✦ ✦</div>
+          <h2 class="series-title">Construa sua <em>Fé</em></h2>
+          <p class="series-sub">Série especial — Domingos em Junho</p>
+        </div>
+        <div class="banner-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section divider -->
+    <div class="section-divider fade-up"><span>Descubra</span></div>
+
+    <!-- 3-col grid -->
+    <div class="grid3" id="grid3">
+
+      <!-- Card: Novo na Igreja -->
+      <a href="#sobre" class="card-img fade-up" aria-label="Novo na Luz Viva? Descubra tudo sobre nós">
+        <div class="card-img-bg" style="background-image:url('1.webp');" aria-hidden="true"></div>
+        <div class="card-img-overlay" aria-hidden="true"></div>
+        <div class="card-img-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="card-img-content">
+          <h3>Novo na<br>Luz Viva?</h3>
+          <p>Descubra tudo sobre quem somos.</p>
+        </div>
+      </a>
+
+      <!-- Card: Locais e Horários -->
+      <div class="card-locations fade-up d1" id="sobre" role="region" aria-labelledby="locations-title">
+        <h3 id="locations-title">Locais &amp;<br>Horários</h3>
+        <p>Nos reunimos toda semana. Escolha o horário mais próximo de você.</p>
+
+        <div class="location-chips" role="list" aria-label="Dias de culto disponíveis">
+          <button class="chip active" aria-pressed="true">Domingo manhã</button>
+          <button class="chip" aria-pressed="false">Domingo tarde</button>
+          <button class="chip" aria-pressed="false">Quarta-Feira</button>
+          <button class="chip" aria-pressed="false">Sexta Jovens</button>
+        </div>
+
+        <div class="location-divider" aria-hidden="true"></div>
+
+        <div class="horarios-list" role="list" aria-label="Horários dos cultos">
+          <div class="horario-row" role="listitem">
+            <span>Domingo — Manhã</span>
+            <span>09h00</span>
+          </div>
+          <div class="horario-row" role="listitem">
+            <span>Domingo — Tarde</span>
+            <span>18h00</span>
+          </div>
+          <div class="horario-row" role="listitem">
+            <span>Quarta-Feira</span>
+            <span>19h30</span>
+          </div>
+          <div class="horario-row" role="listitem">
+            <span>Sexta — Jovens</span>
+            <span>20h00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Ministérios (branco) -->
+      <div class="card-ministerios fade-up d2" role="region" aria-labelledby="ministerios-title">
+        <h3 id="ministerios-title">Um Lugar para<br>Todos</h3>
+        <p>Acreditamos em criar espaço para cada geração.</p>
+
+        <nav class="ministerio-list" aria-label="Ministérios da igreja">
+          <a href="#" class="ministerio-row" aria-label="Kids — Crianças de 0 a 9 anos">
+            <div class="ministerio-row-info">
+              <p class="ministerio-row-name">Luz Kids</p>
+              <p class="ministerio-row-sub">Crianças, 0–9 anos</p>
+            </div>
+            <span class="ministerio-row-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#" class="ministerio-row" aria-label="Junior — Crianças de 10 a 12 anos">
+            <div class="ministerio-row-info">
+              <p class="ministerio-row-name">Luz Junior</p>
+              <p class="ministerio-row-sub">Crianças, 10–12 anos</p>
+            </div>
+            <span class="ministerio-row-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#" class="ministerio-row" aria-label="Jovens — Adolescentes de 13 a 18 anos">
+            <div class="ministerio-row-info">
+              <p class="ministerio-row-name">Luz Jovens</p>
+              <p class="ministerio-row-sub">Adolescentes, 13–18 anos</p>
+            </div>
+            <span class="ministerio-row-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#" class="ministerio-row" aria-label="Young Adults — Jovens adultos 18+">
+            <div class="ministerio-row-info">
+              <p class="ministerio-row-name">Young Adults</p>
+              <p class="ministerio-row-sub">Jovens adultos, 18+</p>
+            </div>
+            <span class="ministerio-row-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Next Step banner -->
+    <a href="#" class="nextstep-banner fade-up" aria-label="Dê o próximo passo na sua jornada de fé">
+      <div class="nextstep-glow" aria-hidden="true"></div>
+      <div class="nextstep-content">
+        <h2>Dê o Seu Próximo Passo</h2>
+        <p>Entre na sua jornada pessoal de crescimento e relacionamento com Deus.</p>
+      </div>
+      <div class="nextstep-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M7 17L17 7M7 7h10v10"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- Events section -->
+    <div class="section-divider2 fade-up" id="eventos"><span>Em Breve</span></div>
+
+    <div class="eventos-scroll" role="list" aria-label="Próximos eventos">
+      <article class="evento-card fade-up" role="listitem">
+        <div class="evento-card-img" style="background-image:url('2.webp');" aria-hidden="true"></div>
+        <div class="evento-card-overlay" aria-hidden="true"></div>
+        <div class="evento-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="evento-card-content">
+          <span class="evento-tag">Culto</span>
+          <h3>Noite de Louvor</h3>
+          <p>Dom, 18 Mai · 18h00</p>
+        </div>
+      </article>
+
+      <article class="evento-card fade-up d1" role="listitem">
+        <div class="evento-card-img" style="background-image:url('4.webp');" aria-hidden="true"></div>
+        <div class="evento-card-overlay" aria-hidden="true"></div>
+        <div class="evento-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="evento-card-content">
+          <span class="evento-tag">Jovens</span>
+          <h3>Encontro de Jovens</h3>
+          <p>Sex, 23 Mai · 20h00</p>
+        </div>
+      </article>
+
+      <article class="evento-card fade-up d2" role="listitem">
+        <div class="evento-card-img" style="background-image:url('3.webp');" aria-hidden="true"></div>
+        <div class="evento-card-overlay" aria-hidden="true"></div>
+        <div class="evento-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="evento-card-content">
+          <span class="evento-tag">Conferência</span>
+          <h3>Conferência de Fé</h3>
+          <p>Dom, 1 Jun · 09h00</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── YOUTUBE ──────────────────────────────────────────── -->
+    <div class="section-divider2 fade-up" id="midia"><span>Assista</span></div>
+
+    <div class="yt-section fade-up">
+
+      <!-- Featured video -->
+      <a href="https://youtube.com/@luzvivachurch" target="_blank" rel="noopener noreferrer"
+         class="yt-main" aria-label="Assistir pregação mais recente no YouTube">
+        <div class="yt-thumb-wrap" aria-hidden="true">
+          <img src="5.webp" alt="Pregação — Luz Viva Church" class="yt-thumb" loading="lazy" />
+        </div>
+        <div class="yt-main-overlay" aria-hidden="true"></div>
+        <div class="yt-live-badge" aria-label="Transmitido ao vivo">
+          <span class="yt-live-dot" aria-hidden="true"></span>
+          ÚLTIMO CULTO
+        </div>
+        <div class="yt-play-btn" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="yt-main-info">
+          <h3>Construa Sua Fé — Domingo 18h</h3>
+          <p>Luz Viva Church · 2.4K visualizações · 2 dias atrás</p>
+        </div>
+        <div class="yt-main-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Recent videos grid -->
+      <div class="yt-grid" role="list" aria-label="Últimas pregações">
+        <a href="https://youtube.com/@luzvivachurch" target="_blank" rel="noopener noreferrer"
+           class="yt-card fade-up" role="listitem" aria-label="Pregação: O Poder da Oração">
+          <div class="yt-card-thumb">
+            <img src="2.webp" alt="O Poder da Oração" loading="lazy" />
+            <div class="yt-card-play" aria-hidden="true">
+              <div class="yt-card-play-inner">
+                <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+            <span class="yt-card-duration" aria-label="Duração: 52 minutos">52:14</span>
+          </div>
+          <div class="yt-card-body">
+            <h4>O Poder da Oração na Sua Vida</h4>
+            <p class="yt-card-meta">1.1K views · há 1 semana</p>
+          </div>
+        </a>
+
+        <a href="https://youtube.com/@luzvivachurch" target="_blank" rel="noopener noreferrer"
+           class="yt-card fade-up d1" role="listitem" aria-label="Pregação: Família que Deus Construiu">
+          <div class="yt-card-thumb">
+            <img src="3.webp" alt="Família que Deus Construiu" loading="lazy" />
+            <div class="yt-card-play" aria-hidden="true">
+              <div class="yt-card-play-inner">
+                <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+            <span class="yt-card-duration" aria-label="Duração: 48 minutos">48:37</span>
+          </div>
+          <div class="yt-card-body">
+            <h4>A Família que Deus Construiu</h4>
+            <p class="yt-card-meta">876 views · há 2 semanas</p>
+          </div>
+        </a>
+
+        <a href="https://youtube.com/@luzvivachurch" target="_blank" rel="noopener noreferrer"
+           class="yt-card fade-up d2" role="listitem" aria-label="Pregação: Propósito em Cada Estação">
+          <div class="yt-card-thumb">
+            <img src="4.webp" alt="Propósito em Cada Estação" loading="lazy" />
+            <div class="yt-card-play" aria-hidden="true">
+              <div class="yt-card-play-inner">
+                <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+            <span class="yt-card-duration" aria-label="Duração: 1 hora 3 minutos">1:03:21</span>
+          </div>
+          <div class="yt-card-body">
+            <h4>Propósito em Cada Estação da Vida</h4>
+            <p class="yt-card-meta">654 views · há 3 semanas</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- CTA row -->
+      <div class="yt-cta-row fade-up">
+        <p>Não perca nenhuma mensagem — inscreva-se no canal.</p>
+        <a href="https://youtube.com/@luzvivachurch" target="_blank" rel="noopener noreferrer" class="btn-yt" aria-label="Ver canal no YouTube (abre em nova aba)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M23 7s-.3-2-1.2-2.8C20.7 3 19.4 3 18.8 2.9 16.2 2.7 12 2.7 12 2.7s-4.2 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.2v1.9c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.3 21.4 12 21.4 12 21.4s4.2 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-1.9C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l6.6 3.6-6.6 3.5z"/>
+          </svg>
+          Ver Canal no YouTube
+        </a>
+      </div>
+    </div>
+
+    <!-- ── FLICKR PHOTOS ──────────────────────────────────────── -->
+    <div class="section-divider2 fade-up"><span>Fotos do Culto</span></div>
+
+    <div class="flickr-section fade-up">
+      <div class="flickr-header">
+        <div class="flickr-header-left">
+          <h2>Momentos em Comunhão</h2>
+          <p>Nossas fotos no Flickr — atualizadas após cada culto.</p>
+        </div>
+        <a href="https://flickr.com" target="_blank" rel="noopener noreferrer" class="btn-flickr" aria-label="Ver todas as fotos no Flickr (abre em nova aba)">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="7" cy="12" r="4" fill="#0063dc"/>
+            <circle cx="17" cy="12" r="4" fill="#ff0084"/>
+          </svg>
+          Ver no Flickr
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width:11px;height:11px;opacity:0.6">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="flickr-track-wrap" aria-label="Galeria de fotos dos cultos" role="region">
+        <div class="flickr-track" id="flickrTrack">
+          <!-- set A -->
+          <div class="flickr-photo" role="button" tabindex="0" aria-label="Abrir foto: Adoração" data-idx="0">
+            <img src="1.webp" alt="Congregação em adoração" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="0" aria-label="Abrir foto: Cruz Iluminada" data-idx="1">
+            <img src="2.webp" alt="Cruz iluminada no palco" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="0" aria-label="Abrir foto: Auditório" data-idx="2">
+            <img src="3.webp" alt="Auditório cheio durante culto especial" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="0" aria-label="Abrir foto: Luzes Azuis" data-idx="3">
+            <img src="4.webp" alt="Congregação sob luzes azuis" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="0" aria-label="Abrir foto: Cruz Branca" data-idx="4">
+            <img src="5.webp" alt="Cruz branca com luzes dramáticas" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="0" aria-label="Abrir foto: Adoração 2" data-idx="0">
+            <img src="1.webp" alt="Congregação em adoração" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <!-- set B — clone for infinite loop -->
+          <div class="flickr-photo" role="button" tabindex="-1" aria-hidden="true" data-idx="1">
+            <img src="2.webp" alt="" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="-1" aria-hidden="true" data-idx="2">
+            <img src="3.webp" alt="" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="-1" aria-hidden="true" data-idx="3">
+            <img src="4.webp" alt="" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="-1" aria-hidden="true" data-idx="4">
+            <img src="5.webp" alt="" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+          <div class="flickr-photo" role="button" tabindex="-1" aria-hidden="true" data-idx="0">
+            <img src="1.webp" alt="" loading="lazy" />
+            <div class="flickr-photo-overlay"><div class="flickr-photo-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar foto">
+      <button class="lightbox-close" id="lbClose" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <button class="lightbox-prev" id="lbPrev" aria-label="Foto anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <img id="lbImg" src="" alt="Foto do culto" />
+      <button class="lightbox-next" id="lbNext" aria-label="Próxima foto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="lightbox-counter" id="lbCounter" aria-live="polite"></div>
+    </div>
+
+    <!-- Giving strip -->
+    <div class="giving-strip fade-up" id="giving" role="region" aria-labelledby="giving-title">
+      <div class="giving-strip-text">
+        <h2 id="giving-title">Contribua com a Visão</h2>
+        <p>Sua generosidade transforma vidas e faz a obra de Deus avançar nesta cidade e além.</p>
+      </div>
+      <div class="giving-strip-action">
+        <a href="#" class="btn-give" aria-label="Fazer uma contribuição">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+          Contribuir Agora
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col-logo">
+        <div class="nav-logo" aria-label="Luz Viva Church" style="background:rgba(255,255,255,0.08); border:1px solid var(--border);">
+          <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect x="11" y="1" width="6" height="26" rx="1.5" fill="#f5a623"/>
+            <rect x="1" y="9" width="26" height="6" rx="1.5" fill="#f5a623"/>
+          </svg>
+        </div>
+        <p>Uma comunidade de fé comprometida em transformar vidas e ser uma luz nesta cidade.</p>
+        <div class="footer-socials" aria-label="Redes sociais">
+          <a href="#" class="fsocial" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="#" class="fsocial" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/>
+              <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+            </svg>
+          </a>
+          <a href="#" class="fsocial" aria-label="Spotify">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 13.5c2.5-1 5.5-.8 8 .5M7 10c3-1.3 7-1 10 .5M9 16c2-.8 4.5-.6 6.5.5"/>
+            </svg>
+          </a>
+          <a href="#" class="fsocial" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Igreja</h4>
+        <ul>
+          <li><a href="#">Sobre Nós</a></li>
+          <li><a href="#">Nossa Visão</a></li>
+          <li><a href="#">Liderança</a></li>
+          <li><a href="#">História</a></li>
+          <li><a href="#">Declaração de Fé</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Comunidade</h4>
+        <ul>
+          <li><a href="#">Ministérios</a></li>
+          <li><a href="#">Células</a></li>
+          <li><a href="#">Voluntários</a></li>
+          <li><a href="#">Missões</a></li>
+          <li><a href="#">Eventos</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-newsletter">
+        <h4>Newsletter</h4>
+        <p>Receba nossa programação e devocional semanal.</p>
+        <form class="footer-form" onsubmit="handleFooterForm(event)" novalidate>
+          <label for="f-email" class="sr-only">Seu e-mail</label>
+          <input type="email" id="f-email" class="footer-input" placeholder="seu@email.com" autocomplete="email" required aria-required="true" />
+          <button type="submit" class="footer-submit" id="footer-submit-btn">Inscrever-se</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Luz Viva Church — Todos os direitos reservados.</p>
+      <nav aria-label="Links legais">
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+        <a href="#">Cookies</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('bg', window.scrollY > 40);
+    }, { passive: true });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('drawer');
+    hamburger.addEventListener('click', () => {
+      const open = drawer.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    drawer.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Chip selector
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        chip.closest('.location-chips').querySelectorAll('.chip').forEach(c => {
+          c.classList.remove('active');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        chip.classList.add('active');
+        chip.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    // Scroll reveal
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+    fadeEls.forEach(el => obs.observe(el));
+
+    // ── Flickr lightbox ──────────────────────────────────────
+    const lbImages = ['1.webp','2.webp','3.webp','4.webp','5.webp'];
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lbImg');
+    const lbCounter = document.getElementById('lbCounter');
+    let lbCurrent   = 0;
+
+    function openLightbox(idx) {
+      lbCurrent = ((idx % lbImages.length) + lbImages.length) % lbImages.length;
+      lbImg.src = lbImages[lbCurrent];
+      lbCounter.textContent = `${lbCurrent + 1} / ${lbImages.length}`;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('lbClose').focus();
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function lbNavigate(dir) {
+      lbCurrent = ((lbCurrent + dir) + lbImages.length) % lbImages.length;
+      lbImg.src = lbImages[lbCurrent];
+      lbCounter.textContent = `${lbCurrent + 1} / ${lbImages.length}`;
+    }
+
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', () => lbNavigate(-1));
+    document.getElementById('lbNext').addEventListener('click', () => lbNavigate(1));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lbNavigate(-1);
+      if (e.key === 'ArrowRight') lbNavigate(1);
+    });
+
+    document.querySelectorAll('.flickr-photo[data-idx]').forEach(photo => {
+      const open = () => openLightbox(parseInt(photo.dataset.idx));
+      photo.addEventListener('click', open);
+      photo.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    });
+
+    // Pause flickr scroll on focus-within (keyboard nav)
+    const flickrTrack = document.getElementById('flickrTrack');
+    flickrTrack.addEventListener('focusin', () => flickrTrack.style.animationPlayState = 'paused');
+    flickrTrack.addEventListener('focusout', () => flickrTrack.style.animationPlayState = 'running');
+
+    // Newsletter
+    function handleFooterForm(e) {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      const btn = document.getElementById('footer-submit-btn');
+      if (!input.validity.valid) { input.focus(); return; }
+      btn.textContent = 'Inscrito ✓';
+      btn.style.background = '#10b981';
+      btn.style.color = '#fff';
+      input.value = '';
+      setTimeout(() => {
+        btn.textContent = 'Inscrever-se';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
